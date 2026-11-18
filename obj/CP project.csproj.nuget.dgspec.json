@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/addrick/Desktop/CP project/CP project.csproj": {}
+    "/Users/addrick/Desktop/ClinicManagementSystem/CP project.csproj": {}
   },
   "projects": {
-    "/Users/addrick/Desktop/CP project/CP project.csproj": {
+    "/Users/addrick/Desktop/ClinicManagementSystem/CP project.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/addrick/Desktop/CP project/CP project.csproj",
+        "projectUniqueName": "/Users/addrick/Desktop/ClinicManagementSystem/CP project.csproj",
         "projectName": "CP project",
-        "projectPath": "/Users/addrick/Desktop/CP project/CP project.csproj",
+        "projectPath": "/Users/addrick/Desktop/ClinicManagementSystem/CP project.csproj",
         "packagesPath": "/Users/addrick/.nuget/packages/",
-        "outputPath": "/Users/addrick/Desktop/CP project/obj/",
+        "outputPath": "/Users/addrick/Desktop/ClinicManagementSystem/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/addrick/.nuget/NuGet/NuGet.Config"
