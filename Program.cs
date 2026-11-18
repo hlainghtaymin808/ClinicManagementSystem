@@ -1,15 +1,15 @@
-
 using System;
 
 public class Patient
 {
     // Patient properties
-    public int PatientID { get; set; }
+    public int PatientID { get; set; } // short version of get {return PatientID;}, set { PatientID = value;}
+
     public string PatientName { get; set; }
     public int PatientAge { get; set; }
     public string Symptoms { get; set; }
 
-    // Store each patient's consultation fee
+    // NEW: Store each patient's consultation fee
     public double ConsultationFee { get; set; }
 
     // Constructor
@@ -19,24 +19,25 @@ public class Patient
         PatientName = name;
         PatientAge = age;
         Symptoms = symptoms;
+
+        // NEW: Initially, no consultation fee has been calculated
         ConsultationFee = 0;
     }
 }
-
 public class Program
 {
-    // One-dimensional array for patient objects
+    // Existing: One-dimensional array for patient objects
     static Patient[] patients = new Patient[100];
 
     static int patientCount = 0;
 
-    // Two-dimensional array for appointment schedules
+    // NEW: Two-dimensional array for appointment schedules
     // 5 rows = Monday to Friday
     // 4 columns = 4 appointment times per day
     // 0 means the appointment slot is available
     static int[,] appointments = new int[5, 4];
 
-    // Day names
+    // NEW: Day names
     static string[] days =
     {
         "Monday",
@@ -46,7 +47,7 @@ public class Program
         "Friday"
     };
 
-    // Appointment times
+    // NEW: Appointment times
     static string[] times =
     {
         "09:00",
@@ -54,6 +55,7 @@ public class Program
         "13:00",
         "15:00"
     };
+
 
     public static void Main()
     {
@@ -68,9 +70,9 @@ public class Program
             Console.WriteLine("2. View All Patients");
             Console.WriteLine("3. Search Patient");
             Console.WriteLine("4. Calculate Consultation Fee");
-            Console.WriteLine("5. Book Appointment");
-            Console.WriteLine("6. View Appointment Schedule");
-            Console.WriteLine("7. Exit");
+            Console.WriteLine("5. Book Appointment");       // NEW
+            Console.WriteLine("6. View Appointment Schedule"); // NEW
+            Console.WriteLine("7. Exit");                   // MODIFIED
             Console.WriteLine("=======================================");
             Console.Write("Select an option (1-7): ");
 
@@ -94,15 +96,15 @@ public class Program
                     CalculateFee();
                     break;
 
-                case "5":
+                case "5":                   // NEW
                     BookAppointment();
                     break;
 
-                case "6":
+                case "6":                   // NEW
                     ViewSchedule();
                     break;
 
-                case "7":
+                case "7":                   // MODIFIED
                     keepRunning = false;
                     Console.WriteLine("Thank you for using the system!");
                     break;
@@ -120,23 +122,7 @@ public class Program
         }
     }
 
-    // FIND PATIENT BY ID
-    public static int FindPatient(int searchID)
-    {
-        for (int i = 0; i < patientCount; i++)
-        {
-            if (patients[i].PatientID == searchID)
-            {
-                // Return the array index if found
-                return i;
-            }
-        }
-
-        // Return -1 if the patient does not exist
-        return -1;
-    }
-
-    // STEP 1: PATIENT REGISTRATION
+    // STEP 1: IMPROVED PATIENT REGISTRATION
     public static void RegisterPatient()
     {
         // Check whether the patient array is full
@@ -147,32 +133,41 @@ public class Program
         }
 
         Console.WriteLine("\n========== PATIENT REGISTRATION ==========");
-
-        Console.Write("Enter Patient ID: ");
-        int id = int.Parse(Console.ReadLine());
-
-        // Prevent zero or negative patient IDs
-        if (id <= 0)
+        int id;    //change the coding with while loop
+        while (true)
         {
-            Console.WriteLine("Patient ID must be positive!");
-            return;
-        }
+            Console.Write("Enter Patient ID: ");
 
-        // Prevent duplicate patient IDs
-        if (FindPatient(id) != -1)
-        {
-            Console.WriteLine("This Patient ID already exists!");
-            return;
+            if (!int.TryParse(Console.ReadLine(), out id))
+            {
+                Console.WriteLine("Please enter a valid number!");
+                continue;
+            }
+
+            if (id <= 0)
+            {
+                Console.WriteLine("Patient ID must be positive!");
+                continue;
+            }
+
+            if (FindPatient(id) != -1)
+            {
+                Console.WriteLine("This Patient ID already exists!");
+                continue;
+            }
+
+            break;
         }
 
         Console.Write("Enter Patient Name: ");
         string name = Console.ReadLine();
 
         Console.Write("Enter Patient Age: ");
+
         int age = int.Parse(Console.ReadLine());
 
-        // Prevent invalid ages
-        if (age < 0 || age > 150)
+        //// NEW: Prevent negative ages
+        if (age < 0 || age > 100)
         {
             Console.WriteLine("Invalid age!");
             return;
@@ -201,7 +196,8 @@ public class Program
         Console.WriteLine("\nPatient registered successfully!");
     }
 
-    // STEP 2: VIEW PATIENT RECORDS
+
+    // STEP 2: IMPROVED PATIENT RECORDS
     public static void ViewPatients()
     {
         Console.WriteLine("\n========================== PATIENT RECORDS ==========================");
@@ -212,7 +208,7 @@ public class Program
             return;
         }
 
-        // Display column headings
+        // MODIFIED: Display column headings with proper spacing
         Console.WriteLine(
             "{0,-12} {1,-20} {2,-8} {3,-22} {4,-12}",
             "Patient ID",
@@ -240,19 +236,12 @@ public class Program
         }
     }
 
-    // STEP 3: SEARCH PATIENT
+
+    // STEP 2: SEARCH PATIENT
     public static void SearchPatient()
     {
         Console.Write("\nEnter Patient ID to search: ");
-
-        // Validate Patient ID input
-        int searchID;
-
-        if (!int.TryParse(Console.ReadLine(), out searchID))
-        {
-            Console.WriteLine("Invalid input! Please enter a numeric Patient ID.");
-            return;
-        }
+        int searchID = int.Parse(Console.ReadLine());
 
         int index = FindPatient(searchID);
 
@@ -265,6 +254,8 @@ public class Program
             Console.WriteLine("Name: " + p.PatientName);
             Console.WriteLine("Age: " + p.PatientAge);
             Console.WriteLine("Symptoms: " + p.Symptoms);
+
+            // NEW: Display the patient's consultation fee
             Console.WriteLine("Consultation Fee: $" + p.ConsultationFee);
         }
         else
@@ -273,12 +264,30 @@ public class Program
         }
     }
 
-    // STEP 4: CALCULATE CONSULTATION FEE
+
+    // EXISTING: FIND PATIENT BY ID
+    public static int FindPatient(int searchID)
+    {
+        for (int i = 0; i < patientCount; i++)
+        {
+            if (patients[i].PatientID == searchID)
+            {
+                // Return the array index if found
+                return i;
+            }
+        }
+
+        // Return -1 if the patient does not exist
+        return -1;
+    }
+
+
+    // STEP 3: CONNECT CONSULTATION FEES TO PATIENTS
     public static void CalculateFee()
     {
         Console.WriteLine("\n========== CONSULTATION FEE ==========");
 
-        // Ask which patient is receiving the consultation
+        // NEW: Ask which patient is receiving the consultation
         Console.Write("Enter Patient ID: ");
         int searchID = int.Parse(Console.ReadLine());
 
@@ -325,13 +334,14 @@ public class Program
                 return;
         }
 
-        // Save the fee inside the patient's object
+        // NEW: Save the fee inside the patient's object
         p.ConsultationFee = fee;
 
         Console.WriteLine("\nConsultation fee calculated successfully!");
         Console.WriteLine("Patient: " + p.PatientName);
         Console.WriteLine("Consultation Fee = $" + p.ConsultationFee);
     }
+
 
     // STEP 5: BOOK APPOINTMENT USING THE 2D ARRAY
     public static void BookAppointment()
@@ -340,15 +350,7 @@ public class Program
 
         // Ask for patient ID
         Console.Write("Enter Patient ID: ");
-
-        // Validate Patient ID input
-        int searchID;
-
-        if (!int.TryParse(Console.ReadLine(), out searchID))
-        {
-            Console.WriteLine("Invalid input! Please enter a numeric Patient ID.");
-            return;
-        }
+        int searchID = int.Parse(Console.ReadLine());
 
         // Check whether the patient exists
         int patientIndex = FindPatient(searchID);
@@ -372,15 +374,7 @@ public class Program
         }
 
         Console.Write("Enter day (1-5): ");
-
-        // Validate day input
-        int dayChoice;
-
-        if (!int.TryParse(Console.ReadLine(), out dayChoice))
-        {
-            Console.WriteLine("Invalid input! Please enter a number.");
-            return;
-        }
+        int dayChoice = Convert.ToInt32(Console.ReadLine());
 
         // Check whether the day selection is valid
         if (dayChoice < 1 || dayChoice > 5)
@@ -398,15 +392,7 @@ public class Program
         }
 
         Console.Write("Enter time (1-4): ");
-
-        // Validate time input
-        int timeChoice;
-
-        if (!int.TryParse(Console.ReadLine(), out timeChoice))
-        {
-            Console.WriteLine("Invalid input! Please enter a number.");
-            return;
-        }
+        int timeChoice = Convert.ToInt32(Console.ReadLine());
 
         // Check whether the time selection is valid
         if (timeChoice < 1 || timeChoice > 4)
@@ -435,6 +421,7 @@ public class Program
         Console.WriteLine("Time: " + times[timeIndex]);
     }
 
+
     // STEP 6: DISPLAY THE APPOINTMENT TIMETABLE
     public static void ViewSchedule()
     {
@@ -449,6 +436,7 @@ public class Program
         }
 
         Console.WriteLine();
+
         Console.WriteLine("-------------------------------------------------------------------------");
 
         // Outer loop: move through each day
