@@ -1,0 +1,14 @@
+/Users/addrick/Desktop/CP project/bin/Debug/net10.0/CP project
+/Users/addrick/Desktop/CP project/bin/Debug/net10.0/CP project.deps.json
+/Users/addrick/Desktop/CP project/bin/Debug/net10.0/CP project.runtimeconfig.json
+/Users/addrick/Desktop/CP project/bin/Debug/net10.0/CP project.dll
+/Users/addrick/Desktop/CP project/bin/Debug/net10.0/CP project.pdb
+/Users/addrick/Desktop/CP project/obj/Debug/net10.0/CP project.GeneratedMSBuildEditorConfig.editorconfig
+/Users/addrick/Desktop/CP project/obj/Debug/net10.0/CP project.AssemblyInfoInputs.cache
+/Users/addrick/Desktop/CP project/obj/Debug/net10.0/CP project.AssemblyInfo.cs
+/Users/addrick/Desktop/CP project/obj/Debug/net10.0/CP project.csproj.CoreCompileInputs.cache
+/Users/addrick/Desktop/CP project/obj/Debug/net10.0/CP project.dll
+/Users/addrick/Desktop/CP project/obj/Debug/net10.0/refint/CP project.dll
+/Users/addrick/Desktop/CP project/obj/Debug/net10.0/CP project.pdb
+/Users/addrick/Desktop/CP project/obj/Debug/net10.0/CP project.genruntimeconfig.cache
+/Users/addrick/Desktop/CP project/obj/Debug/net10.0/ref/CP project.dll
